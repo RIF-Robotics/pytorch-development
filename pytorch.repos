@@ -3,3 +3,7 @@ repositories:
     type: git
     url: git@github.com:python-engineer/pytorchTutorial.git
     version: master
+  surgical_instrumnet_model:
+    type: git
+    url: git@github.com:RIF-Robotics/surgical_instrument_model.git
+    version: master
