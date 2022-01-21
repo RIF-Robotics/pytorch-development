@@ -1,0 +1,5 @@
+repositories:
+  pytorchTutorial:
+    type: git
+    url: git@github.com:python-engineer/pytorchTutorial.git
+    version: master
