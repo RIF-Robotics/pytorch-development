@@ -61,7 +61,7 @@ execute the following:
 2.  Clone additional repositories
 
         $ cd /path/to/pytorch_setup
-        $ vcs import ../src < dingo.repos
+        $ vcs import ../src < pytorch.repos
 
     **NOTE**: Regularly execute the following to keep the repositories up to
     date:
@@ -71,14 +71,14 @@ execute the following:
 
 3. Build Docker image
 
-        $ cd /path/to/pytorch_setup
+        $ cd /path/to/pytorch_setup/dockerfiles
         $ docker-compose build
 
 # Interact with the container
 
 Spin up the container:
 
-    $ cd /path/to/pytorch_setup
+    $ cd /path/to/pytorch_setup/dockerfiles
     $ docker-compose up -d dev-nvidia
 
 Drop inside a container. You can execute this in as many terminals as desired
@@ -89,5 +89,5 @@ same container:
 
 Stop the container:
 
-    $ cd /path/to/pytorch_setup
+    $ cd /path/to/pytorch_setup/dockerfiles
     $ docker-compose stop
