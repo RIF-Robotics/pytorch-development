@@ -7,11 +7,7 @@ from inside the container's environment.
 TODO ======================
 Describe the workflow when using the container.
 
-
-
-# Getting Started
-
-Need to follow these instructions only the first time.
+# First Time Instructions
 
 ## Install Dependencies:
 
