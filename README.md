@@ -56,29 +56,29 @@ execute the following:
 
         $ mkdir -p /path/to/pytorch_ws/src
         $ cd /path/to/pytorch_ws
-        $ git clone git@github.com:RIF-Robotics/pytorch-development.git
+        $ git clone git@github.com:RIF-Robotics/pytorch_setup.git
 
 2.  Clone additional repositories
 
-        $ cd /path/to/pytorch-development
+        $ cd /path/to/pytorch_setup
         $ vcs import ../src < dingo.repos
 
     **NOTE**: Regularly execute the following to keep the repositories up to
     date:
 
-        $ cd /path/to/pytorch-development
+        $ cd /path/to/pytorch_setup
         $ vcs pull ../src
 
 3. Build Docker image
 
-        $ cd /path/to/pytorch-development
+        $ cd /path/to/pytorch_setup
         $ docker-compose build
 
 # Interact with the container
 
 Spin up the container:
 
-    $ cd /path/to/pytorch-development
+    $ cd /path/to/pytorch_setup
     $ docker-compose up -d dev-nvidia
 
 Drop inside a container. You can execute this in as many terminals as desired
@@ -89,5 +89,5 @@ same container:
 
 Stop the container:
 
-    $ cd /path/to/pytorch-development
+    $ cd /path/to/pytorch_setup
     $ docker-compose stop
