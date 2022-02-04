@@ -1,11 +1,11 @@
 # About
 
 Setup a Docker container with the correct PyTorch environment. This setup allows
-developers to write code on their host while leveraging the power of PyTorch
-from inside the container's environment.
+developers to use theri favorite text editor to write code on their host while
+leveraging the power of PyTorch from inside the container's environment.
 
-TODO ======================
-Describe the workflow when using the container.
+Pull down any project on your host machine with `vcs` and docker will take care
+of binding it to the inside of the container.
 
 # First Time Instructions
 
@@ -37,6 +37,10 @@ execute the following:
 
         $ sudo apt update
         $ sudo apt install -y nvidia-docker2
+
+**NOTE**: The `nvidia-docker2` dependency is important if you want to use
+Kubernetes with Docker 19.03 (and newer), because Kubernetes doesn't support
+passing GPU information down to docker through the --gpus flag yet.
 
 3. Restart the Docker daemon:
 
