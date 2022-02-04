@@ -72,7 +72,7 @@ passing GPU information down to docker through the --gpus flag yet.
 3. Build Docker image
 
         $ cd /path/to/pytorch_setup/dockerfiles
-        $ docker-compose build
+        $ docker-compose build -d dev-nvidia
 
 # Interact with the container
 
