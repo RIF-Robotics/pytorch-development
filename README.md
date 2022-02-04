@@ -1,7 +1,7 @@
 # About
 
 Setup a Docker container with the correct PyTorch environment. This setup allows
-developers to use theri favorite text editor to write code on their host while
+developers to use their favorite text editor to write code on their host while
 leveraging the power of PyTorch from inside the container's environment.
 
 Pull down any project on your host machine with `vcs` and docker will take care
