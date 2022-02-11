@@ -5,7 +5,9 @@ ENV DEBIAN_FRONTEND noninteractive
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update \
-    && apt-get install -y sudo build-essential python-dev
+    && apt-get install -y \
+       sudo apt-utils build-essential python-dev python3.8-venv \
+       libgl1-mesa-glx libglib2.0-0 libsm6 libxrender1 libxext6
 
 # Create the "devuser" user, add user to sudo group
 ENV USERNAME devuser
@@ -25,3 +27,6 @@ WORKDIR /home/$USERNAME/workspace
 
 # Copy code into the container
 COPY --chown=devuser ./src ./src
+
+# Setup .bashrc environment
+RUN echo 'export PATH=$PATH:/home/devuser/.local/bin' >> /home/$USERNAME/.bashrc
