@@ -7,3 +7,7 @@ repositories:
     type: git
     url: git@github.com:RIF-Robotics/surgical_instrument_model.git
     version: master
+  yolov5:
+    type: git
+    url: git@github.com:ultralytics/yolov5.git
+    version: master
