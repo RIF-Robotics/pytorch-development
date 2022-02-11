@@ -87,7 +87,58 @@ same container:
 
     $ docker exec -it pytorch_env_nvidia /bin/bash
 
-Stop the container:
+Execute the following on your host to ttop the container:
 
     $ cd /path/to/pytorch_setup/dockerfiles
     $ docker-compose stop
+
+# YOLO V5
+
+This project mainly leverages
+the [YOLO v5](https://github.com/ultralytics/yolov5) project. The vcs import
+command will have already cloned the repo in the corresponding location. Follow
+these instructions to setup your environment so you can start training and using
+your own models:
+
+## First Time Setup
+
+1. Create a virtual environment in your directory of choice and activate it:
+
+        $ cd /path/to/workspace
+        $ python3 -m venv venv
+        $ source venv/bin/activate
+
+2. Install the required dependencies:
+
+        $ cd /path/to/yolov5
+        $ pip install -r requirements.txt
+
+3. Install the correct version of PyTorch (taken
+   from [pytorch.org](https://pytorch.org/get-started/locally/)):
+
+        $ pip3 install torch==1.10.2+cu113 torchvision==0.11.3+cu113 torchaudio==0.10.2+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+
+4. Install missing packages:
+
+        $ pip install wandb
+
+## Train and Use Models
+
+Always remember to activate the virtual environment:
+
+    $ cd /path/to/workspace
+    $ source venv/bin/activate
+
+Execute the following to train a model with custom data
+(use
+[these tips](https://github.com/ultralytics/yolov5/wiki/Tips-for-Best-Training-Results) for
+best training results):
+
+    $ cd /path/to/yolov5
+    $ python train.py --img 416 --batch 16 --epochs 300 --data data.yaml --weights yolov5s.pt --cache
+
+Once the model is trained, you can use the trained weights to detect objects in
+new images:
+
+    $ cd /path/to/yolov5
+    $ python detect.py --weights runs/train/exp/weights/best.pt --img 416 --conf 0.1 --source {dataset.location}/test/images
