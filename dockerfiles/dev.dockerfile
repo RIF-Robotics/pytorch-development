@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     git \
     wget \
     sudo \
-    ninja-build
+    ninja-build \
+    python3-opencv
 
 # Create the "dev" user, add user to sudo group
 ENV USERNAME dev
@@ -59,11 +60,13 @@ COPY --chown=dev ./src ./src
 ## Setup .bashrc environment
 RUN echo 'export PATH=$PATH:/home/dev/.local/bin' >> /home/$USERNAME/.bashrc
 
-# run detectron2 demo
+# Setup for detectron2 demo
 RUN cd ./src/detectron2_repo \
     && wget http://images.cocodataset.org/val2017/000000439715.jpg -O input.jpg \
-    && mkdir -p outputs \
-    && python3 demo/demo.py  \
-	--config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml \
-	--input input.jpg --output outputs/ \
-	--opts MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl
+    && mkdir -p outputs
+
+# Run the following command after starting the container
+# cd ./src/detectron2_repo && \
+# python3 demo/demo.py --config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml --input input.jpg --output outputs --opts MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl
+# Input is output to ./outputs directory
+# Use feh to display: sudo apt-get install feh && feh ./outputs/input.jpg
