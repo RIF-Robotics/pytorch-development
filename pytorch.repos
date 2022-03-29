@@ -1,4 +1,8 @@
 repositories:
+  detectron2_repo:
+    type: git
+    url: https://github.com/facebookresearch/detectron2
+    version: main
   pytorchTutorial:
     type: git
     url: git@github.com:python-engineer/pytorchTutorial.git
