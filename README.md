@@ -92,13 +92,37 @@ Execute the following on your host to ttop the container:
     $ cd /path/to/pytorch_setup/dockerfiles
     $ docker-compose stop
 
+# Detectron 2
+
+Leverage the provided Docker environment to run
+Facebook's [detectron2](https://github.com/facebookresearch/detectron2) library.
+
+## Run the Demo
+
+1. Setup the environment by executing the following inside a spinning container:
+
+        $ cd ~/workspace/src/detectron2_repo
+        $ wget http://images.cocodataset.org/val2017/000000439715.jpg -O input.jpg
+        $ mkdir -p outputs
+
+2. Execute the following to run the demo on a pre-trained COCO model and perform
+   instance segmentation on the previously downloaded image:
+
+        $ cd ~/workspace/src/detectron2_repo
+        $ python3 demo/demo.py --config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml --input input.jpg --output outputs --opts MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl
+
+3. Use `feh` to display:
+
+        $ sudo apt-get install feh
+        $ feh ./outputs/input.jpg
+
 # YOLO V5
 
-This project mainly leverages
-the [YOLO v5](https://github.com/ultralytics/yolov5) project. The vcs import
-command will have already cloned the repo in the corresponding location. Follow
-these instructions to setup your environment so you can start training and using
-your own models:
+You don't need to use the Docker container to train
+a [YOLO v5](https://github.com/ultralytics/yolov5) model. The vcs import command
+will have already cloned the repo in the corresponding location. Follow these
+instructions to setup your environment so you can start training and using your
+own models:
 
 ## First Time Setup
 

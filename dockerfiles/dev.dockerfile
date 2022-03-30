@@ -32,7 +32,7 @@ WORKDIR /home/$USERNAME/workspace
 RUN pip install --user tensorboard cmake opencv-python   # cmake from apt-get is too old
 
 # This image already has torch and torchvision, so we don't have to install it
-#RUN pip install --user torch==1.10 torchvision==0.11.1 -f https://download.pytorch.org/whl/cu111/torch_stable.html
+# RUN pip install --user torch==1.10 torchvision==0.11.1 -f https://download.pytorch.org/whl/cu111/torch_stable.html
 
 # Install facebook vision core code
 RUN pip install --user 'git+https://github.com/facebookresearch/fvcore'
@@ -57,16 +57,5 @@ ENV FVCORE_CACHE="/tmp"
 # Copy code into the container
 COPY --chown=dev ./src ./src
 
-## Setup .bashrc environment
+# Setup .bashrc environment
 RUN echo 'export PATH=$PATH:/home/dev/.local/bin' >> /home/$USERNAME/.bashrc
-
-# Setup for detectron2 demo
-RUN cd ./src/detectron2_repo \
-    && wget http://images.cocodataset.org/val2017/000000439715.jpg -O input.jpg \
-    && mkdir -p outputs
-
-# Run the following command after starting the container
-# cd ./src/detectron2_repo && \
-# python3 demo/demo.py --config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml --input input.jpg --output outputs --opts MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl
-# Input is output to ./outputs directory
-# Use feh to display: sudo apt-get install feh && feh ./outputs/input.jpg
