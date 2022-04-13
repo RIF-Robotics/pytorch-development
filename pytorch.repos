@@ -1,17 +1,9 @@
 repositories:
+  # pytorchTutorial:
+  #   type: git
+  #   url: git@github.com:python-engineer/pytorchTutorial.git
+  #   version: master
   detectron2_repo:
     type: git
     url: https://github.com/facebookresearch/detectron2
     version: main
-  pytorchTutorial:
-    type: git
-    url: git@github.com:python-engineer/pytorchTutorial.git
-    version: master
-  surgical_instrument_model:
-    type: git
-    url: git@github.com:RIF-Robotics/surgical_instrument_model.git
-    version: master
-  yolov5:
-    type: git
-    url: git@github.com:ultralytics/yolov5.git
-    version: master
