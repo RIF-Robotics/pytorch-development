@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:1.10.0-cuda11.3-cudnn8-devel
+FROM pytorch/pytorch:1.11.0-cuda11.3-cudnn8-devel
 
 MAINTAINER Sergio Garcia Vergara
 ENV DEBIAN_FRONTEND noninteractive
@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y \
     wget \
     sudo \
     ninja-build \
-    python3-opencv
+    python3-opencv \
+    libcurl4
 
 # Create the "dev" user, add user to sudo group
 ENV USERNAME dev
@@ -29,17 +30,19 @@ RUN mkdir -p /home/$USERNAME/workspace/src
 
 WORKDIR /home/$USERNAME/workspace
 
-RUN pip install --user tensorboard cmake opencv-python   # cmake from apt-get is too old
+RUN python3 -m venv --system-site-packages env
 
-# This image already has torch and torchvision, so we don't have to install it
-# RUN pip install --user torch==1.10 torchvision==0.11.1 -f https://download.pytorch.org/whl/cu111/torch_stable.html
+RUN source ./env/bin/activate \
+    && pip install \
+    tensorboard \
+    cmake \
+    opencv-python \
+    fiftyone
 
-# Install facebook vision core code
-RUN pip install --user 'git+https://github.com/facebookresearch/fvcore'
-
-# Install detectron2 binary
-RUN python -m pip install detectron2==0.6 -f \
-    https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
+RUN source ./env/bin/activate \
+    && pip install 'git+https://github.com/facebookresearch/fvcore' \
+    && pip install detectron2==0.6 -f \
+        https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
 
 ## install detectron2 (from source)
 #RUN git clone https://github.com/facebookresearch/detectron2 detectron2_repo
@@ -55,7 +58,12 @@ RUN python -m pip install detectron2==0.6 -f \
 ENV FVCORE_CACHE="/tmp"
 
 # Copy code into the container
-COPY --chown=dev ./src ./src
+COPY --chown=dev ./src/rif-python ./src/rif-python
+
+# Install rif-python
+RUN source ./env/bin/activate \
+    && cd ./src/rif-python \
+    && python setup.py develop
 
 # Setup .bashrc environment
-RUN echo 'export PATH=$PATH:/home/dev/.local/bin' >> /home/$USERNAME/.bashrc
+RUN echo 'source ~/workspace/env/bin/activate' >> /home/$USERNAME/.bashrc

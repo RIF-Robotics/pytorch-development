@@ -85,14 +85,68 @@ Drop inside a container. You can execute this in as many terminals as desired
 once the container is spinning. Keep in mind that they all drop you into the
 same container:
 
-    $ docker exec -it pytorch_env_nvidia /bin/bash
+    $ docker exec -it rif_detectron2 /bin/bash
 
 Execute the following on your host to ttop the container:
 
     $ cd /path/to/pytorch_setup/dockerfiles
     $ docker-compose stop
 
-# Detectron 2
+# Train Surgical Instrument Detector
+
+1. Using CVAT, export the datasets that you want to use: `Actions Export task
+dataset`. Settings:
+    - Export Format: `CVAT for images 1.1`
+    - Save Images: `True` (checkbox).
+
+Save the exported zip files to the `pytorch_ws/data` directory. I exported the
+following datasets:
+    - #2: RealSense Images
+    - #3: Surgical Instruments with Arm
+
+2. Make individual directories (`mkdir`) for each dataset you downloaded and
+   unzip the downloaded datasets into their respective directories.
+
+3. Visualize the dataset with fiftyone in your browser. Inside the docker
+   container, run the command:
+
+        fiftyone_view_dataset cvat /path/to/data/<cvat-dataset>
+
+4. If necessary, combine multiple CVAT datasets into a single CVAT dataset
+
+        cd ./data
+        combine_datasets <output-cvat-dataset> <input-cvat-dataset0> <input-cvat-dataset1>
+
+5. Convert the CVAT dataset to a COCO dataset with training, validation, and
+   test splits. This creates three separate coco datasets under the
+   `<output-coco-dataset>` folder.
+
+        fiftyone_cvat_to_coco <input-cvat-dataset> <output-coco-dataset> --splits 0.7 0.2 0.1
+
+6. Visualize the COCO training dataset in fiftyone to make sure it's as
+   expected.
+
+        fiftyone_view_dataset coco <coco-dataset>/train
+
+7. Train the model. The `<coco-dataset>` folder should contain `train`, `val`,
+   and `test` subfolders.
+
+        detectron2_model_train <coco-dataset> --output_dir 2022-05-11-trained-model --train
+
+8. While training, use `tensorboard` to visualize loss and other metrics. Open
+   another terminal in the docker container and execute:
+
+        tensorboard --logdir /path/to/2022-05-11-trained-model --bind_all
+
+9. Evaluate the model's performance on the test set
+
+        detectron2_model_train <coco-dataset> --output_dir 2022-05-11-trained-model --evaluate
+
+10. Show model predictions on the test set
+
+        detectron2_model_train <coco-dataset> --output_dir 2022-05-11-trained-model --predict
+
+# Detectron 2 Balloon Demo
 
 Leverage the provided Docker environment to run
 Facebook's [detectron2](https://github.com/facebookresearch/detectron2) library.
