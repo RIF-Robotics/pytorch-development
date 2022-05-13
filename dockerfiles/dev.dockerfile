@@ -4,6 +4,10 @@ MAINTAINER Sergio Garcia Vergara
 ENV DEBIAN_FRONTEND noninteractive
 SHELL ["/bin/bash", "-c"]
 
+# The key is old in the image and apt-get update won't run with the bad
+# key. This is a temporary fix.
+RUN sed -i 's/deb h/deb [trusted=yes] h/g' /etc/apt/sources.list.d/cuda.list
+
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     python3-dev \
