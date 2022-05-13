@@ -1,33 +1,5 @@
 repositories:
-  BlenderProc:
-    type: git
-    url: https://github.com/DLR-RM/BlenderProc.git
-    version: main
-  datumaro:
-    type: git
-    url: https://github.com/openvinotoolkit/datumaro.git
-    version: develop
-  detectron2_repo:
-    type: git
-    url: https://github.com/facebookresearch/detectron2
-    version: main
-  fiftyone:
-    type: git
-    url: https://github.com/voxel51/fiftyone.git
-    version: develop
-  pytorchTutorial:
-    type: git
-    url: git@github.com:python-engineer/pytorchTutorial.git
-    version: master
   rif-python:
     type: git
     url: git@github.com:RIF-Robotics/rif-python.git
     version: main
-  surgical_instrument_model:
-    type: git
-    url: git@github.com:RIF-Robotics/surgical_instrument_model.git
-    version: master
-  yolov5:
-    type: git
-    url: git@github.com:ultralytics/yolov5.git
-    version: master
