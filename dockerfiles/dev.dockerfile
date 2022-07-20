@@ -68,7 +68,7 @@ COPY --chown=dev ./src/rif-python ./src/rif-python
 # Install rif-python
 RUN source ./env/bin/activate \
     && cd ./src/rif-python \
-    && python setup.py develop --user
+    && python setup.py develop
 
 # Setup .bashrc environment
 RUN echo 'source ~/workspace/env/bin/activate' >> /home/$USERNAME/.bashrc
