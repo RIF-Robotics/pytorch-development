@@ -43,10 +43,11 @@ RUN source ./env/bin/activate \
     opencv-python \
     fiftyone
 
+# Install Detectron2 and related dependencies
 RUN source ./env/bin/activate \
-    && pip install 'git+https://github.com/facebookresearch/fvcore' \
-    && pip install detectron2==0.6 -f \
-        https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
+    && pip3 install 'git+https://github.com/facebookresearch/fvcore' \
+    && pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu113 \
+    && python3 -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
 
 ## install detectron2 (from source)
 #RUN git clone https://github.com/facebookresearch/detectron2 detectron2_repo
@@ -67,7 +68,7 @@ COPY --chown=dev ./src/rif-python ./src/rif-python
 # Install rif-python
 RUN source ./env/bin/activate \
     && cd ./src/rif-python \
-    && python setup.py develop
+    && python setup.py develop --user
 
 # Setup .bashrc environment
 RUN echo 'source ~/workspace/env/bin/activate' >> /home/$USERNAME/.bashrc
