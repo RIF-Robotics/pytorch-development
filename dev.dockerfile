@@ -43,6 +43,7 @@ RUN source ./env/bin/activate \
     opencv-python \
     fiftyone
 
+# Install Detectron2 and related dependencies
 RUN source ./env/bin/activate \
     && pip install 'git+https://github.com/facebookresearch/fvcore'
 

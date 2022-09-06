@@ -7,6 +7,13 @@ leveraging the power of PyTorch from inside the container's environment.
 Pull down any project on your host machine with `vcs` and docker will take care
 of binding it to the inside of the container.
 
+**NOTE**: Refer to the documentation in
+the
+[rif-internal-docs](https://github.com/RIF-Robotics/rif-internal-docs/tree/main/docs) repo
+for instructions on how to train an image segmentation model with `detectron2`,
+how to interact with CVAT, how to generate synthetic data with `blenderproc`,
+etc.
+
 # First Time Instructions
 
 ## Install Dependencies:
