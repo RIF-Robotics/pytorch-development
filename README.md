@@ -169,3 +169,40 @@ Facebook's [detectron2](https://github.com/facebookresearch/detectron2) library.
 
         $ sudo apt-get install feh
         $ feh ./outputs/input.jpg
+
+# Generate Synthetic Images with BlenderProc
+
+1. Step inside the running Docker container:
+
+        docker exec -it rif_detectron2 /bin/bash
+
+2. Setup BlenderProc in the container with the [quickstart
+   script](https://dlr-rm.github.io/BlenderProc/index.html)
+
+        blenderproc quickstart
+
+    View the resulting image:
+
+        blenderproc vis hdf5 output/0.hdf5
+
+3. Generate five synthetic images.
+
+        cd ./src/rif-python/scripts/blenderproc/random_placement
+
+        blenderproc run main.py ./config.json \
+            ~/workspace/src/surgical-instrument-3D-models/library/models.json \
+            ~/workspace/data/blenderproc_output \
+            --runs 5
+
+4. View a single synthetic data sample:
+
+        blenderproc vis hdf5 ~/workspace/data/blenderproc_output/0.hdf5
+
+5. View synthetic data in fiftyone:
+
+        $ fiftyone_view_dataset coco \
+            ~/workspace/data/blenderproc_output/coco_data \
+            --images-dir . \
+            --labels-file coco_annotations.json
+
+    Point your browser at [http://localhost:5151](http://localhost:5151)
