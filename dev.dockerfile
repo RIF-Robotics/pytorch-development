@@ -18,11 +18,14 @@ RUN apt-get update && apt-get install -y \
     python3-opencv \
     libcurl4
 
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
 # Create the "dev" user, add user to sudo group
 ENV USERNAME dev
 RUN adduser --disabled-password --gecos '' $USERNAME \
-    && usermod  --uid 1000 $USERNAME \
-    && groupmod --gid 1000 $USERNAME \
+    && usermod  --uid ${USER_ID} $USERNAME \
+    && groupmod --gid ${GROUP_ID} $USERNAME \
     && usermod --shell /bin/bash $USERNAME \
     && adduser $USERNAME sudo \
     && adduser $USERNAME dialout \
@@ -30,7 +33,7 @@ RUN adduser --disabled-password --gecos '' $USERNAME \
 
 USER $USERNAME
 
-RUN mkdir -p /home/$USERNAME/workspace/src
+RUN mkdir -p /home/$USERNAME/workspace/{src,data}
 
 WORKDIR /home/$USERNAME/workspace
 
@@ -63,7 +66,8 @@ RUN source ./env/bin/activate \
 
 RUN source ./env/bin/activate \
     && cd ./src/BlenderProc \
-    && pip install -e .
+    && pip install -e . \
+    && pip install blenderproc
 
 # Setup .bashrc environment
 RUN echo "export USER=$USERNAME" >> /home/$USERNAME/.bashrc \
