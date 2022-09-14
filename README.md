@@ -79,6 +79,7 @@ passing GPU information down to docker through the --gpus flag yet.
 3. Build Docker image
 
         cd /path/to/pytorch_setup/dockerfiles
+        echo -e "USER_ID=$(id -u ${USER})\nGROUP_ID=$(id -g ${USER})" > .env
         docker-compose build
 
 # Interact with the container
