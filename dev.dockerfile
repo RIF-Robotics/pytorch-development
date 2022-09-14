@@ -66,8 +66,7 @@ RUN source ./env/bin/activate \
 
 RUN source ./env/bin/activate \
     && cd ./src/BlenderProc \
-    && pip install -e . \
-    && pip install blenderproc
+    && pip install -e .
 
 # Setup .bashrc environment
 RUN echo "export USER=$USERNAME" >> /home/$USERNAME/.bashrc \

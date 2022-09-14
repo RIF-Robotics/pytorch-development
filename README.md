@@ -78,7 +78,7 @@ passing GPU information down to docker through the --gpus flag yet.
 
 3. Build Docker image
 
-        cd /path/to/pytorch_setup/dockerfiles
+        cd /path/to/pytorch_setup
         echo -e "USER_ID=$(id -u ${USER})\nGROUP_ID=$(id -g ${USER})" > .env
         docker-compose build
 
@@ -86,7 +86,7 @@ passing GPU information down to docker through the --gpus flag yet.
 
 Spin up the container:
 
-    cd /path/to/pytorch_setup/dockerfiles
+    cd /path/to/pytorch_setup
     docker-compose up -d dev-nvidia
 
 Drop inside a container. You can execute this in as many terminals as desired
@@ -97,7 +97,7 @@ same container:
 
 Execute the following on your host to stop the container:
 
-    cd /path/to/pytorch_setup/dockerfiles
+    cd /path/to/pytorch_setup
     docker-compose stop
 
 # Train Surgical Instrument Detector
