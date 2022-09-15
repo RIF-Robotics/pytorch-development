@@ -1,7 +1,7 @@
 repositories:
   BlenderProc:
     type: git
-    url: https://github.com/SyllogismRXS/BlenderProc.git
+    url: git@github.com:SyllogismRXS/BlenderProc.git
     version: main
   detectron2:
     type: git
@@ -9,9 +9,9 @@ repositories:
     version: 5aeb252b194b93dc2879b4ac34bc51a31b5aee13
   rif-python:
     type: git
-    url: https://github.com/RIF-Robotics/rif-python.git
+    url: git@github.com:RIF-Robotics/rif-python.git
     version: main
   surgical-instrument-3D-models:
     type: git
-    url: https://github.com/RIF-Robotics/surgical-instrument-3D-models.git
+    url: git@github.com:RIF-Robotics/surgical-instrument-3D-models.git
     version: main
