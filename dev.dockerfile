@@ -56,6 +56,9 @@ ENV FVCORE_CACHE="/tmp"
 # Copy code into the container
 COPY --chown=dev . ./src/
 
+# TODO
+# Consider using this method:
+# https://thekev.in/blog/2016-11-18-python-in-docker/index.html
 RUN source ./env/bin/activate \
     && cd ./src/rif-python \
     && python setup.py develop
