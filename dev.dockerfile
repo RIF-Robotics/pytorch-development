@@ -60,13 +60,13 @@ RUN source ./env/bin/activate \
     && cd ./src/rif-python \
     && python setup.py develop
 
-RUN source ./env/bin/activate \
-    && cd ./src/detectron2 \
-    && python setup.py install
-
-RUN source ./env/bin/activate \
-    && cd ./src/BlenderProc \
-    && pip install -e .
+#RUN source ./env/bin/activate \
+#    && cd ./src/detectron2 \
+#    && python setup.py install
+#
+#RUN source ./env/bin/activate \
+#    && cd ./src/BlenderProc \
+#    && pip install -e .
 
 # Setup .bashrc environment
 RUN echo "export USER=$USERNAME" >> /home/$USERNAME/.bashrc \
