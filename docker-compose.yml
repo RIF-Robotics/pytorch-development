@@ -5,6 +5,9 @@ services:
     build:
         context: ../src
         dockerfile: ../pytorch_setup/dev.dockerfile # this is relative to the context defined above
+        args:
+          USER_ID: ${USER_ID:-0}
+          GROUP_ID: ${GROUP_ID:-0}
     image: rif/detectron2:latest
     container_name: rif_detectron2
     network_mode: "host"           # access to host's network
