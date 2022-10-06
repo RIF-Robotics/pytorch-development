@@ -26,3 +26,4 @@ services:
        - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
        - ../src:/home/dev/workspace/src
        - ../data:/home/dev/workspace/data
+       - /dev/shm:/dev/shm
