@@ -64,6 +64,7 @@ RUN source ./env/bin/activate \
     && python setup.py develop
 
 RUN source ./env/bin/activate \
+    && pip install pycocotools==2.0.4 \
     && cd ./src/detectron2 \
     && python setup.py install
 
