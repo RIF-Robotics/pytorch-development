@@ -27,3 +27,4 @@ services:
        - ../src:/home/dev/workspace/src
        - ../data:/home/dev/workspace/data
        - /dev/shm:/dev/shm
+       - /dev:/dev
