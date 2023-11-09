@@ -1,12 +1,8 @@
-FROM pytorch/pytorch:1.11.0-cuda11.3-cudnn8-devel
+FROM ubuntu:focal
 
-MAINTAINER Sergio Garcia Vergara
+MAINTAINER Kevin DeMarco
 ENV DEBIAN_FRONTEND noninteractive
 SHELL ["/bin/bash", "-c"]
-
-# The key is old in the image and apt-get update won't run with the bad
-# key. This is a temporary fix.
-RUN sed -i 's/deb h/deb [trusted=yes] h/g' /etc/apt/sources.list.d/cuda.list
 
 RUN apt-get update && apt-get install -y \
     ca-certificates \
@@ -15,8 +11,16 @@ RUN apt-get update && apt-get install -y \
     wget \
     sudo \
     ninja-build \
-    python3-opencv \
-    libcurl4
+    libcurl4 \
+    pkg-config \
+    python3-pip \
+    python3-venv \
+    cython3 \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    python3-tk \
+    && rm -rf /var/lib/apt/lists/*
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -37,25 +41,49 @@ RUN mkdir -p /home/$USERNAME/workspace/{src,data}
 
 WORKDIR /home/$USERNAME/workspace
 
-RUN python3 -m venv --system-site-packages env
+#RUN python3 -m venv --system-site-packages env
+RUN python3 -m venv env
+
+RUN source ./env/bin/activate \
+    && pip install --upgrade pip \
+    && pip install wheel \
+    && pip install setuptools
 
 RUN source ./env/bin/activate \
     && pip install \
     tensorboard \
     cmake \
     opencv-python \
-    fiftyone
+    fiftyone \
+    pygit2 \
+    pyzip \
+    pgzip
 
-# Install Detectron2 and related dependencies
 RUN source ./env/bin/activate \
-    && pip install 'git+https://github.com/facebookresearch/fvcore'
-
-# Set a fixed model cache directory.
-ENV FVCORE_CACHE="/tmp"
+    && pip install \
+    split-folders \
+    apriltag \
+    lxml
 
 # Copy code into the container
 COPY --chown=dev . ./src/
 
+# Install fvcore
+RUN source ./env/bin/activate \
+    && pip install ./src/fvcore
+
+# Install torch vision
+RUN source ./env/bin/activate \
+    && pip install torch torchvision
+
+# Install Detectron2
+RUN source ./env/bin/activate \
+    && pip install ./src/detectron2
+
+
+## Set a fixed model cache directory.
+##ENV FVCORE_CACHE="/tmp"
+#
 # TODO
 # Consider using this method:
 # https://thekev.in/blog/2016-11-18-python-in-docker/index.html
@@ -63,14 +91,14 @@ RUN source ./env/bin/activate \
     && cd ./src/rif-python \
     && python setup.py develop
 
-RUN source ./env/bin/activate \
-    && pip install pycocotools==2.0.4 \
-    && cd ./src/detectron2 \
-    && python setup.py install
+#RUN source ./env/bin/activate \
+#    && pip install pycocotools \
+#    && cd ./src/detectron2 \
+#    && python setup.py install
 
-RUN source ./env/bin/activate \
-    && cd ./src/BlenderProc \
-    && pip install -e .
+#RUN source ./env/bin/activate \
+#    && cd ./src/BlenderProc \
+#    && pip install -e .
 
 # Setup .bashrc environment
 RUN echo "export USER=$USERNAME" >> /home/$USERNAME/.bashrc \
