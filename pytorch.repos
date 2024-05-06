@@ -15,3 +15,7 @@ repositories:
     type: git
     url: git@github.com:RIF-Robotics/surgical-instrument-3D-models.git
     version: main
+  fvcore:
+    type: git
+    url: https://github.com/facebookresearch/fvcore
+    version: main
