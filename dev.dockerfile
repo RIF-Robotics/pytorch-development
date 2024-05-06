@@ -70,7 +70,7 @@ COPY --chown=dev . ./src/
 
 # Install fvcore
 RUN source ./env/bin/activate \
-    && pip install ./src/fvcore
+    && pip3 install ./fvcore
 
 # Install torch vision
 RUN source ./env/bin/activate \
