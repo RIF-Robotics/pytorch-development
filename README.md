@@ -22,7 +22,7 @@ etc.
 * docker-compose: https://docs.docker.com/compose/install/
 * vcs: http://wiki.ros.org/vcstool
 
-I prefer `sudo apt install python3-vcstool`.
+I prefer `sudo apt update &&  sudo apt install python3 -y b&& sudo apt install python3-pip -y`.
 
 ## Nvidia Drivers
 
