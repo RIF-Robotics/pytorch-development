@@ -61,7 +61,7 @@ passing GPU information down to docker through the --gpus flag yet.
 
 1. Setup workspace and clone this repository
 
-        mkdir -p /path/to/pytorch_ws/{src,data}
+        mkdir -p /path/to/pytorch_ws/{src,data/repos}
         cd /path/to/pytorch_ws
         git clone git@github.com:RIF-Robotics/pytorch_setup.git
 
@@ -80,7 +80,7 @@ passing GPU information down to docker through the --gpus flag yet.
 
         cd /path/to/pytorch_setup
         echo -e "USER_ID=$(id -u ${USER})\nGROUP_ID=$(id -g ${USER})" > .env
-        docker-compose build
+        docker compose build
 
 # Interact with the container
 

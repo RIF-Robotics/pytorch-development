@@ -53,33 +53,32 @@ RUN source ./env/bin/activate \
     && pip install \
     tensorboard \
     cmake \
-    opencv-python \
     fiftyone \
-    pygit2 \
     pyzip \
-    pgzip
-
-RUN source ./env/bin/activate \
-    && pip install \
-    split-folders \
+    numpy==1.26.4 \
+    torch \
+    torchvision \
     apriltag \
-    lxml
+    opencv-python \
+    pygit2 \
+    pgzip \
+    ultralytics \
+    transforms3d \
+    shapely \
+    timm \
+    lxml \
+    split-folders
 
 # Copy code into the container
 COPY --chown=dev . ./src/
 
-# Install fvcore
-RUN source ./env/bin/activate \
-    && pip install ./src/fvcore
+## Install fvcore
+#RUN source ./env/bin/activate \
+#    && pip install ./src/fvcore
 
-# Install torch vision
-RUN source ./env/bin/activate \
-    && pip install torch torchvision
-
-# Install Detectron2
-RUN source ./env/bin/activate \
-    && pip install ./src/detectron2
-
+## Install Detectron2
+#RUN source ./env/bin/activate \
+#    && pip install ./src/detectron2
 
 ## Set a fixed model cache directory.
 ##ENV FVCORE_CACHE="/tmp"
