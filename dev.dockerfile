@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
     libsm6 \
     libxext6 \
     python3-tk \
+    cmake \
     && rm -rf /var/lib/apt/lists/*
 
 ARG USER_ID=1000
