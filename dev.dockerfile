@@ -55,6 +55,7 @@ RUN source ./env/bin/activate \
     tensorboard \
     cmake \
     fiftyone \
+    pycocotools \
     pyzip \
     numpy==1.26.4 \
     torch \
@@ -73,32 +74,22 @@ RUN source ./env/bin/activate \
 # Copy code into the container
 COPY --chown=dev . ./src/
 
-## Install fvcore
+# Install fvcore
 #RUN source ./env/bin/activate \
 #    && pip install ./src/fvcore
 
-## Install Detectron2
-#RUN source ./env/bin/activate \
-#    && pip install ./src/detectron2
+# Install Detectron2
+RUN source ./env/bin/activate \
+    && pip install ./src/detectron2
 
-## Set a fixed model cache directory.
-##ENV FVCORE_CACHE="/tmp"
-#
-# TODO
+# Set a fixed model cache directory.
+ENV FVCORE_CACHE "/tmp"
+
 # Consider using this method:
 # https://thekev.in/blog/2016-11-18-python-in-docker/index.html
 RUN source ./env/bin/activate \
     && cd ./src/rif-python \
     && python setup.py develop
-
-#RUN source ./env/bin/activate \
-#    && pip install pycocotools \
-#    && cd ./src/detectron2 \
-#    && python setup.py install
-
-#RUN source ./env/bin/activate \
-#    && cd ./src/BlenderProc \
-#    && pip install -e .
 
 # Setup .bashrc environment
 RUN echo "export USER=$USERNAME" >> /home/$USERNAME/.bashrc \
