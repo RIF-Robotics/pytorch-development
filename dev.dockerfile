@@ -38,7 +38,7 @@ RUN adduser --disabled-password --gecos '' $USERNAME \
 
 USER $USERNAME
 
-RUN mkdir -p /home/$USERNAME/workspace/{src,data}
+RUN mkdir -p /home/$USERNAME/workspace/src
 
 WORKDIR /home/$USERNAME/workspace
 

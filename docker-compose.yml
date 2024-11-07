@@ -4,8 +4,8 @@ services:
         context: ../src
         dockerfile: ../pytorch_setup/dev.dockerfile # this is relative to the context defined above
         args:
-          USER_ID: ${USER_ID:-0}
-          GROUP_ID: ${GROUP_ID:-0}
+          USER_ID: ${USER_ID}
+          GROUP_ID: ${GROUP_ID}
     image: rif/pytorch:latest
     container_name: rif_pytorch
     network_mode: "host"           # access to host's network
@@ -13,10 +13,12 @@ services:
     tty: true                      # docker run -t
     privileged: true               # Needed for /dev volume
     runtime: nvidia
-    environment:
+    environment:      
       - DISPLAY=${DISPLAY}             # Pass the display for GUI
       - QT_X11_NO_MITSHM=1             # Needed by QT programs
       - XAUTHORITY=/tmp/.docker.xauth
+      - USER_ID=${USER_ID}
+      - GROUP_ID=${GROUP_ID}
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
       - TERM=xterm-256color            # Enable terminal colors
@@ -24,6 +26,6 @@ services:
        - /tmp/.X11-unix:/tmp/.X11-unix:rw
        - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
        - ../src:/home/dev/workspace/src
-       - ../data:/home/dev/workspace/data
+       - ../data:/home/dev/data
        - /dev/shm:/dev/shm
        - /dev:/dev
