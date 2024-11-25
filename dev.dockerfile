@@ -69,7 +69,10 @@ RUN source ./env/bin/activate \
     shapely \
     timm \
     lxml \
-    split-folders
+    split-folders \
+    lightning \
+    ray[tune] \
+    simplepush
 
 # Copy code into the container
 COPY --chown=dev . ./src/
