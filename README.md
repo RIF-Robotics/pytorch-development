@@ -26,36 +26,24 @@ I prefer `sudo apt update &&  sudo apt install python3 -y b&& sudo apt install p
 
 ## Nvidia Drivers
 
-The [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker) allows
-users to build and run GPU accelerated Docker containers. Although you will
+The NVIDIA Container Toolkit allows users to build and run GPU accelerated Docker containers. Although you will
 **not** have to install the CUDA Toolkit on your host system, you will need to
 install the Nvidia drivers. The instructions can be found in
 the
-[Nvidia docs](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker). Namely,
-execute the following:
+[Nvidia docs](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#installing-with-apt). 
 
-1. Setup the `stable` repository and the GPG key:
+1. In the linked docs, follow both installation instructions and "Configuring Docker" instructions.
 
-        distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-        curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
-        curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-
-2. Install the `nvidia-docker2` package:
-
-        sudo apt update
-        sudo apt install -y nvidia-docker2
-
-**NOTE**: The `nvidia-docker2` dependency is important if you want to use
-Kubernetes with Docker 19.03 (and newer), because Kubernetes doesn't support
-passing GPU information down to docker through the --gpus flag yet.
-
-3. Restart the Docker daemon:
+2. Restart the Docker daemon:
 
         sudo systemctl restart docker
 
-4. Test the setup by running a base CUDA container:
+3. Test the setup by pulling and running a base CUDA container:
 
-        sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
+        sudo docker pull nvidia/cuda:11.0.3-base-ubuntu20.04
+
+	sudo docker run --rm --gpus all nvidia/cuda:11.0.3-base-ubuntu20.04 nvidia-smi
+
 
 ## Clone Repositories
 
